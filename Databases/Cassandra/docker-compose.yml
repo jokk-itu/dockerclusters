@@ -1,0 +1,31 @@
+version: "3.9"
+
+networks:
+  - cassandra_cluster
+
+
+services:
+  
+  master:
+    image: cassandra:4.0
+    container_name: cassandra_master
+    hostname: cassandra_master
+    ports:
+      - "7000:7000"
+    volumes:
+      - "./master/cassandra.yaml:/etc/cassandra/cassandra.yaml"
+      - "./master/data/:/var/lib/cassandra"
+    networks:
+      - cassandra_cluster
+
+  replica:
+    image: cassandra:4.0
+    container_name: cassandra_replica
+    hostname: cassandra_replica
+    ports:
+      - "7000:7000"
+    volumes:
+      - "./replica/cassandra.yaml:/etc/cassandra/cassandra.yaml"
+      - "./replica/data:/var/lib/cassandra"
+    networks:
+      - cassandra_cluster    
